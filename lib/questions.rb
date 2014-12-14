@@ -253,6 +253,13 @@ end
 # e.g. january 1st, will next be a friday in 2016
 # return the day as a capitalized string like 'Friday'
 def your_birthday_is_on_a_friday_in_the_year(birthday)
+  day = birthday.day.to_i
+  month = birthday.month.to_i
+  year = birthday.year.to_i
+  until Time.new(year, month, day).friday? do
+    year +=1
+  end
+  year
 end
 
 # in a file, total the number of times words of different lengths
@@ -261,6 +268,15 @@ end
 # and 1 that is 4 letters long. Return it as a hash in the format
 # word_length => count, e.g. {2 => 1, 3 => 5, 4 => 1}
 def count_words_of_each_length_in_a_file(file_path)
+  file = File.open(file_path)
+  contents = file.read
+  contents_ex_periods = contents.split(".").join
+  contents_ex_commas = contents_ex_periods.split(",").join
+  word_lengths = contents_ex_commas.split(" ").map{|x| x.length}
+  counter_hash = {}
+  hash_keys = contents_ex_commas.split(" ").map{|x| x.length}.uniq.sort
+  hash_keys.each {|k| counter_hash[k] = word_lengths.select{ |x| x == k}.length}
+  counter_hash
 end
 
 # implement fizzbuzz without modulo, i.e. the % method
