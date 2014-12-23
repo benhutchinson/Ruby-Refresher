@@ -68,7 +68,7 @@ end
 # even numbers come first
 # so [1, 2, 3, 4, 5, 6] becomes [[2, 4, 6], [1, 3, 5]]
 def separate_array_into_even_and_odd_numbers(array)
-  array_even = array.select{ |x| x % 2 == 0 }
+  array_even = array.select(&:even?)
   array_odd = array - array_even
   array = [array_even, array_odd]
 end
